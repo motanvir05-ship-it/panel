@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnixNodes - Invite-Based Intel Minecraft Hosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.imgur.com/zPBeGAf.png" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #00a8ff;
+            --primary-dark: #0097e6;
+            --secondary: #e84118;
+            --accent: #fbc531;
+            --dark-text: #2f3640;
+            --light-bg: #f5f6fa;
+            --card-bg: #ffffff;
+            --card-dark-bg: #353b48;
+            --success: #44bd32;
+            --warning: #fbc531;
+            --danger: #e84118;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --minecraft-green: #3b8526;
+            --minecraft-dark-green: #2a631c;
+            --minecraft-blue: #1a73e8;
+            --minecraft-dark-blue: #0d47a1;
+            --intel-blue: #0071c5;
+            --intel-dark-blue: #0068b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2030 0%, #131a28 100%);
+            color: var(--light-bg);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Minecraft Pixel Art Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.7) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .services-container {
+            padding: 2rem 1rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, var(--intel-blue), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, var(--intel-blue), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title p {
+            color: #a0a8c0;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .intel-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--intel-blue) 0%, var(--intel-dark-blue) 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 113, 197, 0.3);
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-dark-bg);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--intel-blue), var(--accent));
+            z-index: 2;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--intel-blue);
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .service-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .invite-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(251, 197, 49, 0.1);
+            padding: 0.8rem;
+            border-radius: 10px;
+            border: 1px solid rgba(251, 197, 49, 0.3);
+        }
+
+        .invite-price .invite-count {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 0.3rem;
+        }
+
+        .invite-price .invite-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a0a8c0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-decoration: line-through;
+        }
+
+        .spec-highlight {
+            background: linear-gradient(135deg, var(--intel-dark-blue), var(--intel-blue));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+
+        .intel-cpu-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 113, 197, 0.15);
+            color: #4da8ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(0, 113, 197, 0.3);
+            justify-content: center;
+        }
+
+        .intel-cpu-badge i {
+            margin-right: 5px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .service-features li {
+            padding: 0.9rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            color: #e0e4ed;
+            font-size: 1rem;
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        .service-features li i {
+            margin-right: 12px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--minecraft-green), var(--minecraft-dark-green));
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 133, 38, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 133, 38, 0.6);
+            background: linear-gradient(135deg, var(--minecraft-dark-green), var(--minecraft-green));
+        }
+
+        .btn-invite {
+            background: linear-gradient(135deg, var(--intel-blue), var(--intel-dark-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 113, 197, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        .btn-invite:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 113, 197, 0.6);
+            background: linear-gradient(135deg, var(--intel-dark-blue), var(--intel-blue));
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent);
+            color: var(--dark-text);
+            padding: 0.4rem 3rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 15px rgba(251, 197, 49, 0.4);
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Minecraft-themed decorations */
+        .minecraft-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .minecraft-divider span {
+            display: inline-block;
+            height: 3px;
+            width: 40px;
+            background: var(--minecraft-green);
+            margin: 0 10px;
+        }
+
+        .minecraft-divider i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+        .service-card:nth-child(4) { animation-delay: 0.4s; }
+        .service-card:nth-child(5) { animation-delay: 0.5s; }
+        .service-card:nth-child(6) { animation-delay: 0.6s; }
+        .service-card:nth-child(7) { animation-delay: 0.7s; }
+        .service-card:nth-child(8) { animation-delay: 0.8s; }
+        .service-card:nth-child(9) { animation-delay: 0.9s; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1200px) {
+            .service-cards {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                padding: 1rem;
+            }
+            
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .service-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .invite-price .invite-count {
+                font-size: 1.8rem;
+            }
+            
+            .popular-tag {
+                font-size: 0.8rem;
+                padding: 0.3rem 2.5rem;
+                right: -30px;
+            }
+        }
+
+        /* Hover Effects */
+        .service-card:hover .invite-price {
+            background: rgba(251, 197, 49, 0.2);
+            transition: var(--transition);
+        }
+
+        /* Performance bars */
+        .performance-bars {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+
+        .performance-bar {
+            height: 5px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-grow: 1;
+            margin: 0 2px;
+            overflow: hidden;
+        }
+
+        .performance-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--intel-blue), var(--accent));
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            color: #a0a8c0;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Infinite symbol styling */
+        .infinite-symbol {
+            font-weight: 900;
+            font-size: 1.4em;
+            color: var(--accent);
+            display: inline-block;
+            margin: 0 2px;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--intel-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 113, 197, 0.4);
+        }
+        
+        /* Mobile enhancements */
+        .service-card {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Improved touch targets for mobile */
+        @media (max-width: 768px) {
+            .btn {
+                padding: 1.2rem 1.5rem;
+            }
+            
+            .service-features li {
+                padding: 1rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        /* Plan comparison slider */
+        .plan-comparison {
+            margin: 3rem 0;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .comparison-table th {
+            background: rgba(0, 113, 197, 0.1);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--intel-blue);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin: 3rem 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            margin-top: 1rem;
+            color: #a0a8c0;
+            display: none;
+        }
+        
+        .faq-active .faq-answer {
+            display: block;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--intel-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 113, 197, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Additional Features Section */
+        .features-section {
+            margin: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 113, 197, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--intel-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .feature-card p {
+            color: #a0a8c0;
+        }
+        
+        /* Invite System Explanation */
+        .invite-system {
+            background: rgba(0, 113, 197, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .invite-system h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .invite-system p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .invite-steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .invite-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 200px;
+            margin: 1rem;
+        }
+        
+        .invite-step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--intel-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .invite-step-text {
+            font-size: 0.9rem;
+        }
+        
+        /* Invite Counter */
+        .invite-counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .invite-counter-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .invite-counter-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .invite-counter-label {
+            font-size: 0.9rem;
+            color: #a0a8c0;
+        }
+    </style>
+</head>
+<% include partials/mcheader %>
+
+        <div class="section-title">
+            <h2>Invite-Based Minecraft Plans</h2>
+            <p>Get Free Minecraft servers by inviting friends! More invites = better plans.</p>
+            <div class="intel-badge">
+                <i class="fas fa-microchip"></i> Powered by Intel Core & Xeon CPUs
+            </div>
+        </div>
+
+        <!-- Invite System Explanation -->
+        <div class="invite-system">
+            <h3>How Our Invite System Works</h3>
+            <p>Earn free server plans by inviting friends to UnixNodes! Each friend who joins up using your invite links counts toward your total invites.</p>
+            
+            <div class="invite-steps">
+                <div class="invite-step">
+                    <div class="invite-step-number">1</div>
+                    <div class="invite-step-text">Get your unique invite link from your discord</div>
+                </div>
+                
+                <div class="invite-step">
+                    <div class="invite-step-number">2</div>
+                    <div class="invite-step-text">Share your invite links with friends</div>
+                </div>
+                
+                <div class="invite-step">
+                    <div class="invite-step-number">3</div>
+                    <div class="invite-step-text">Friends join up using your invite link</div>
+                </div>
+                
+                <div class="invite-step">
+                    <div class="invite-step-number">4</div>
+                    <div class="invite-step-text">Unlock better server plans as you earn invites</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="minecraft-divider">
+            <span></span>
+            <i class="fas fa-cube"></i>
+            <span></span>
+        </div>
+        
+        <div class="service-cards">
+            <div class="service-card">
+                <h3>Dirt Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">3 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹80/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">2GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">1 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">5GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 10 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+
+            <div class="service-card" style="position: relative;">
+                <div class="popular-tag">Popular</div>
+                <h3>Wood Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">6 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹160/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">4GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">2 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">10GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 20 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">get free</a>
+            </div>
+
+            <div class="service-card">
+                <h3>Stone Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">9 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹240/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">6GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">2 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">30GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 30 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+
+            <div class="service-card">
+                <h3>Copper Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">12 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹320/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">8GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">2 Cores</span> @ 4.9GHz</li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">40GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 40 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Iron Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">15 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹420/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">12GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">3 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">50GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 50 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Gold Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">18 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹520/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">16GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">4 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">60GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 60 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Diamond Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">21 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹620/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">24GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">4 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">70GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 70 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Emerald Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">24 Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹720/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">32GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">8 Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">100GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Up to 100 Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-bolt"></i> 99.9% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Obsidian Plan</h3>
+                <div class="invite-price">
+                    <div class="invite-count">? Invites</div>
+                    <div class="invite-label">FREE Plan</div>
+                </div>
+                <div class="price">Regular Price: ₹820/month</div>
+                <div class="intel-cpu-badge"><i class="fas fa-microchip"></i> Intel & Amd</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-memory"></i> <span class="spec-highlight">?GB</span> DDR4 RAM</li>
+                    <li><i class="fas fa-microchip"></i> <span class="spec-highlight">? Cores</span></li>
+                    <li><i class="fas fa-hdd"></i> <span class="spec-highlight">? GB</span> NVMe SSD Storage</li>
+                    <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                    <li><i class="fas fa-share-alt"></i> Full SFTP Access</li>
+                    <li><i class="fas fa-globe"></i> Free Subdomain</li>
+                    <li><i class="fas fa-bolt"></i> 99% Uptime Guarantee</li>
+                </ul>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-primary">available</a>
+                <a href="https://discord.gg/nxGgcrmY9Y" class="btn btn-invite">Get Free</a>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="section-title">
+                <h2>Why Choose Intel for Minecraft?</h2>
+                <p>Intel processors deliver exceptional performance for Minecraft hosting</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Higher Clock Speeds</h3>
+                    <p>Intel CPUs offer superior single-core performance, crucial for Minecraft server operation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Better Optimization</h3>
+                    <p>Minecraft is optimized for Intel architecture, ensuring smoother gameplay.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Turbo Boost Technology</h3>
+                    <p>Intel Turbo Boost automatically increases clock speed for demanding tasks.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Enhanced Security</h3>
+                    <p>Intel hardware-level security features protect your server from vulnerabilities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>© 2025 UnixNodes - Premium Intel-Powered Minecraft Hosting. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Add animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Performance bars animation
+            const performanceBars = document.querySelectorAll('.performance-bar-fill');
+            performanceBars.forEach((bar, index) => {
+                // Set different widths for visual interest
+                setTimeout(() => {
+                    bar.style.width = `${60 + (index * 5)}%`;
+                }, 500);
+            });
+
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // FAQ toggle functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('faq-active');
+                    
+                    const icon = question.querySelector('i');
+                    if (faqItem.classList.contains('faq-active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+            
+            // Invite counter animation
+            function animateValue(id, start, end, duration) {
+                const obj = document.getElementById(id);
+                if (!obj) return;
+                
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    obj.innerHTML = value;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+            
+            // Example invite counter (would be replaced with real data)
+            setTimeout(() => {
+                animateValue("total-invites", 0, 2, 1500);
+                document.getElementById("current-plan").textContent = "None";
+                document.getElementById("next-plan").textContent = "Dirt (3)";
+            }, 2000);
+            
+            // Copy invite link functionality
+            const inviteButtons = document.querySelectorAll('.btn-invite');
+            inviteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // In a real implementation, this would be the user's unique invite link
+                    const inviteLink = "https://unixnodes.com/signup?ref=your-invite-code";
+                    
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(inviteLink).then(() => {
+                        const originalText = button.textContent;
+                        button.textContent = "Copied!";
+                        button.style.background = "var(--success)";
+                        
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.style.background = "";
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Could not copy text: ', err);
+                        alert("Failed to copy invite link. Please manually copy: " + inviteLink);
+                    });
+                });
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    // This would toggle a mobile menu if we had one
+                    // For now, let's scroll to the plans
+                    document.querySelector('.service-cards').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                // Fix for mobile menu button display
+                if (window.innerWidth <= 768) {
+                    mobileMenuBtn.style.display = 'flex';
+                } else {
+                    mobileMenuBtn.style.display = 'none';
+                }
+                
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth <= 768) {
+                        mobileMenuBtn.style.display = 'flex';
+                    } else {
+                        mobileMenuBtn.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnixNodes - Premium Hosting Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --dark: #f8f9fa;
+            --light: #1a1a2e;
+            --header-bg: rgba(26, 26, 46, 0.98);
+            --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #121212;
+            color: var(--dark);
+            padding-top: 70px;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--header-bg);
+            box-shadow: var(--header-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header.scrolled {
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 36px;
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: var(--transition);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-link {
+            color: var(--secondary);
+        }
+
+        .active-link::after {
+            width: 100%;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 200px;
+            background: var(--header-bg);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.6rem 1.25rem;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--secondary);
+        }
+
+        .btn-header {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            margin-left: 1.5rem;
+        }
+
+        .btn-login {
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+
+        .btn-login:hover {
+            background: var(--dark);
+            color: var(--light);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--header-bg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.5rem;
+            transform: translateY(-150%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+        }
+
+        .mobile-nav-item {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .mobile-nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: block;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .mobile-dropdown {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .mobile-dropdown.active {
+            display: block;
+        }
+
+        .mobile-dropdown-item {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .mobile-dropdown-item:hover {
+            color: var(--secondary);
+        }
+
+        .dropdown-toggle {
+            display: inline-block;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-item.active .dropdown-toggle {
+            transform: rotate(180deg);
+        }
+
+        .mobile-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-direction: column;
+        }
+
+        .mobile-btn {
+            display: block;
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-img {
+                height: 32px;
+            }
+
+            .header-container {
+                height: 60px;
+                padding: 0 1rem;
+            }
+
+            .mobile-menu {
+                top: 60px;
+            }
+        }
+
+        /* Animation for header on scroll */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            animation: fadeInDown 0.5s ease forwards;
+        }
+
+        /* Content for demonstration */
+        .content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .content h1 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <img src="https://i.imgur.com/zPBeGAf.png" alt="UnixNodes Logo" class="logo-img">
+                <span class="logo-text">UnixNodes</span>
+            </a>
+
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link active-link">Home</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Minecraft Hosting</a>
+                        <div class="dropdown-menu">
+                            <a href="./minecraft_free" class="dropdown-item">Minecraft Free Plans</a>
+                            <a href="./minecraft_intel" class="dropdown-item">Minecraft Intel Plans</a>
+                            <a href="./minecraft_amd" class="dropdown-item">Minecraft Amd Plans</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="nav-link">VPS Hosting</a>
+                        <div class="dropdown-menu">
+                            <a href="./vps_free" class="dropdown-item">Free VPS Plans</a>
+                            <a href="./vps_intel" class="dropdown-item">Intel VPS Plans</a>
+                            <a href="./vps_amd" class="dropdown-item">Amd VPS Plans</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="nav-link">RDP Hosting</a>
+                        <div class="dropdown-menu">
+                            <a href="./rdp_free" class="dropdown-item">Free RDP Plans</a>
+                            <a href="./rdp_intel" class="dropdown-item">Intel RDP Plans</a>
+                            <a href="./rdp_amd" class="dropdown-item">Amd RDP Plans</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="nav-link">BOT Hosting</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Discord Bots</a>
+                            <a href="#" class="dropdown-item">Telegram Bots</a>
+                            <a href="#" class="dropdown-item">Custom Bots</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Support</a>
+                        <div class="dropdown-menu">
+                            <a href="./faq" class="dropdown-item">FAQ</a>
+                            <a href="./tickets" class="dropdown-item">Submit Ticket</a>
+                            <a href="./contact" class="dropdown-item">Contact Us</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <a href="./login" class="btn-header btn-login">Login</a>
+                    <a href="./register" class="btn-header btn-register">Register</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-list">
+                <li class="mobile-nav-item"><a href="/" class="mobile-nav-link active-link">Home</a></li>
+                
+                <li class="mobile-nav-item">
+                    <a href="./minecraft" class="mobile-nav-link">Minecraft Hosting <span class="dropdown-toggle"><i class="fas fa-chevron-down"></i></span></a>
+                    <div class="mobile-dropdown" id="minecraftDropdown">
+                        <a href="./minecraft_free" class="mobile-dropdown-item">VPS Free</a>
+                        <a href="./minecraft_intel" class="mobile-dropdown-item">VPS Intel</a>
+                        <a href="./minecraft_amd" class="mobile-dropdown-item">VPS AMD</a>
+                    </div>
+                </li>
+
+                <li class="mobile-nav-item">
+                    <a href="" class="mobile-nav-link">VPS Hosting <span class="dropdown-toggle"><i class="fas fa-chevron-down"></i></span></a>
+                    <div class="mobile-dropdown" id="vpsDropdown">
+                        <a href="./vps_free" class="mobile-dropdown-item">Free VPS Plans</a>
+                        <a href="./vps_intel" class="mobile-dropdown-item">Intel VPS Plans</a>
+                        <a href="./vps_amd" class="mobile-dropdown-item">Amd VPS Plans</a>
+                    </div>
+                </li>
+
+                <li class="mobile-nav-item">
+                    <a href="" class="mobile-nav-link">RDP Hosting <span class="dropdown-toggle"><i class="fas fa-chevron-down"></i></span></a>
+                    <div class="mobile-dropdown" id="rdpDropdown">
+                        <a href="./rdp_free" class="mobile-dropdown-item">Free RDP</a>
+                        <a href="./rdp_intel" class="mobile-dropdown-item">Intel RDP</a>
+                        <a href="./rdp_amd" class="mobile-dropdown-item">Amd RDP</a>
+                    </div>
+                </li>
+
+                <li class="mobile-nav-item">
+                    <a href="" class="mobile-nav-link">BOT Hosting <span class="dropdown-toggle"><i class="fas fa-chevron-down"></i></span></a>
+                    <div class="mobile-dropdown" id="botDropdown">
+                        <a href="./discord_bots" class="mobile-dropdown-item">Discord Bots</a>
+                        <a href="./telegram_bots" class="mobile-dropdown-item">Telegram Bots</a>
+                        <a href="./custom_bots" class="mobile-dropdown-item">Custom Bots</a>
+                    </div>
+                </li>
+
+                <li class="mobile-nav-item">
+                    <a href="" class="mobile-nav-link">Support <span class="dropdown-toggle"><i class="fas fa-chevron-down"></i></span></a>
+                    <div class="mobile-dropdown" id="supportDropdown">
+                        <a href="./faq" class="mobile-dropdown-item">FAQ</a>
+                        <a href="./tickets" class="mobile-dropdown-item">Submit Ticket</a>
+                        <a href="./contact" class="mobile-dropdown-item">Contact Us</a>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="mobile-buttons">
+                <a href="./login" class="mobile-btn btn-login">Login</a>
+                <a href="./register" class="mobile-btn btn-register">Register</a>
+            </div>
+        </div>
+    </header>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mobileMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Mobile dropdown toggles
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.nextElementSibling && this.nextElementSibling.classList.contains('mobile-dropdown')) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                    this.nextElementSibling.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-item').forEach(link => {
+            link.addEventListener('click', function() {
+                if (!this.classList.contains('dropdown-toggle') && !this.querySelector('.dropdown-toggle')) {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    
+                    // Close all dropdowns
+                    document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnixNodes - Premium Intel VPS Hosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0ea5e9;
+            --dark: #f5f6fa;
+            --light: #1a2030;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --card-bg: #252f3f;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #131a28;
+            color: var(--dark);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 20%);
+        }
+
+        .header {
+            background: rgba(19, 26, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .invite-explainer {
+            background: var(--gradient);
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .invite-explainer p {
+            margin: 0;
+            font-weight: 600;
+            color: white;
+        }
+
+        .services-container {
+            padding: 4rem 1rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            color: #a0a8c0;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            z-index: 2;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card h3 i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .service-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #a0a8c0;
+            margin-top: 0.4rem;
+            margin-left: 0.2rem;
+        }
+
+        .invites-info {
+            text-align: center;
+            margin: -1rem 0 1.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .service-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            color: #e0e4ed;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .service-features li:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        .service-features li i {
+            margin-right: 10px;
+            color: var(--success);
+            font-size: 1rem;
+            min-width: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 1.2rem;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.3rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.4);
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .best-value-ribbon {
+            position: absolute;
+            top: 12px;
+            left: -5px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.4);
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%, 10% 50%);
+        }
+
+        .performance-meter {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 1.2rem 0;
+            overflow: hidden;
+        }
+
+        .performance-bar {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 3px;
+            transition: width 1s ease-in-out;
+        }
+
+        .intel-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0071c5, #00a9e0);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .services-container {
+                padding: 2rem 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .section-title p {
+                font-size: 0.95rem;
+                padding: 0 1rem;
+            }
+
+            .service-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .price {
+                font-size: 1.8rem;
+            }
+
+            .popular-tag {
+                right: -38px;
+                padding: 0.25rem 2.2rem;
+                font-size: 0.7rem;
+            }
+            
+            .service-features li {
+                font-size: 0.9rem;
+                padding: 0.7rem 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .service-card {
+                padding: 1.2rem;
+            }
+            
+            .service-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .price {
+                font-size: 1.6rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+        }
+
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+            }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .menu-toggle span {
+            width: 2rem;
+            height: 0.25rem;
+            background: var(--dark);
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #a0a8c0;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+ <% include partials/mcheader %>
+    </header>
+
+    <div class="services-container">
+        <div class="invite-explainer">
+            <p>Do <strong>Invites = Get VPS Free</strong> - Each invite gives you access to a free VPS!</p>
+        </div>
+        
+        <div class="section-title animate__animated animate__fadeIn">
+            <h2>Free VPS Hosting</h2>
+            <p>Experience enterprise-grade performance virtual private servers. Perfect for businesses, developers, and high-traffic applications.</p>
+            <div class="intel-badge">Powered by UnixNodes</div>
+        </div>
+
+        <div class="service-cards">
+            <!-- Starter Plan -->
+            <div class="service-card animate__animated animate__fadeInUp">
+                <h3><i class="fas fa-server"></i> Starter</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 30%"></div></div>
+                <div class="price">8 invites <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 2 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 8GB DDR4 RAM</li>
+                    <li><i class="fas fa-hdd"></i> 10GB NVMe SSD</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i> DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary pulse-animation" data-plan="Starter">Get Invite</button>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="service-card animate__animated animate__fadeInUp" style="position: relative;">
+                <div class="popular-tag">Popular</div>
+                <div class="best-value-ribbon">Best Value</div>
+                <h3><i class="fas fa-chart-line"></i> Business</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 60%"></div></div>
+                <div class="price">₹499 <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 2 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 16GB DDR4 RAM</li>
+                    <li><i class="fas fa-hdd"></i> 10GB NVMe SSD</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i>DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary float-animation" data-plan="Business">Get Invite</button>
+            </div>
+
+            <!-- Professional Plan -->
+            <div class="service-card animate__animated animate__fadeInUp">
+                <h3><i class="fas fa-briefcase"></i> Professional</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 80%"></div></div>
+                <div class="price">₹649 <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 4 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 24GB DDR4 RAM</li>
+                    <li><i class="fas fa-hdd"></i> 150GB NVMe SSD</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i>DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary" data-plan="Professional">Get Invite</button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="service-card animate__animated animate__fadeInUp">
+                <h3><i class="fas fa-building"></i> Enterprise</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 100%"></div></div>
+                <div class="price">₹850 <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 8 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 32GB DDR4 RAM</li>
+                    <li><i class="fas fa-hdd"></i> 200GB NVMe SSD</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i> DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary" data-plan="Enterprise">Get Invite</button>
+            </div>
+
+            <!-- Elite Plan -->
+            <div class="service-card animate__animated animate__fadeInUp">
+                <h3><i class="fas fa-gem"></i> Elite</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 90%"></div></div>
+                <div class="price">₹1.5k <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 12 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 48GB DDR4 RAM</li>
+                    <li><i class="fas fa-hdd"></i> 400GB NVMe SSD</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i>DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary" data-plan="Elite">Get Invite</button>
+            </div>
+
+            <!-- Ultimate Plan -->
+            <div class="service-card animate__animated animate__fadeInUp">
+                <h3><i class="fas fa-infinity"></i> Ultimate</h3>
+                <div class="performance-meter"><div class="performance-bar" style="width: 100%"></div></div>
+                <div class="price">₹2.2k <span>/mo</span></div>
+                <div class="invites-info">Invite required for access</div>
+                <ul class="service-features">
+                    <li><i class="fas fa-microchip"></i> 16 vCPU Cores (Intel Xeon)</li>
+                    <li><i class="fas fa-memory"></i> 64GB DDR4 ECC RAM</li>
+                    <li><i class="fas fa-hdd"></i> 500GB NVMe Storage</li>
+                    <li><i class="fas fa-tachometer-alt"></i> Unlimited Bandwidth</li>
+                    <li><i class="fas fa-shield-alt"></i>DDoS Protection</li>
+                </ul>
+                <button class="btn btn-primary" data-plan="Ultimate">Get Invite</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite Modal -->
+    <div class="modal" id="inviteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Get Your <span id="selectedPlan"></span> Invite</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Each invite gives you access to a VPS. Fill out the form below to request an invite for the <strong id="planName"></strong> plan.</p>
+                <form id="inviteForm">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #e0e4ed;">Email Address</label>
+                        <input type="email" id="email" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.2); color: white;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="purpose" style="display: block; margin-bottom: 0.5rem; color: #e0e4ed;">Intended Use</label>
+                        <select id="purpose" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.2); color: white;">
+                            <option value="">Select an option</option>
+                            <option value="web-hosting">Web Hosting</option>
+                            <option value="app-development">Application Development</option>
+                            <option value="gaming">Gaming Server</option>
+                            <option value="data-processing">Data Processing</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background: #6b7280;">Cancel</button>
+                <button class="btn btn-primary" id="submitRequest">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 UnixNodes. All rights reserved.</p>
+            <p>Free VPS Hosting Solutions</p>
+            <div class="footer-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Support</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fix for broken header tag
+            const header = document.querySelector('header');
+            if (!header) {
+                const headerDiv = document.querySelector('.header');
+                if (headerDiv) {
+                    headerDiv.remove();
+                    document.body.insertAdjacentHTML('afterbegin', '<header class="header">' + headerDiv.innerHTML + '</header>');
+                }
+            }
+
+            // Animate performance bars on scroll
+            const performanceBars = document.querySelectorAll('.performance-bar');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width') || entry.target.style.width;
+                        entry.target.style.width = width;
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            performanceBars.forEach(bar => {
+                bar.setAttribute('data-width', bar.style.width);
+                bar.style.width = '0';
+                observer.observe(bar);
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    // Add mobile menu functionality here
+                });
+            }
+
+            // Improved touch support for mobile
+            if ('ontouchstart' in window) {
+                document.querySelectorAll('.service-card').forEach(card => {
+                    card.addEventListener('touchstart', function() {
+                        this.classList.add('hover-effect');
+                    }, { passive: true });
+                    
+                    card.addEventListener('touchend', function() {
+                        this.classList.remove('hover-effect');
+                    }, { passive: true });
+                });
+            }
+
+            // Modal functionality
+            const modal = document.getElementById('inviteModal');
+            const planName = document.getElementById('planName');
+            const selectedPlan = document.getElementById('selectedPlan');
+            const closeModal = document.querySelector('.close-modal');
+            const cancelBtn = document.querySelector('.modal-footer .btn');
+            const submitBtn = document.getElementById('submitRequest');
+            
+            // Open modal when any "Get Invite" button is clicked
+            document.querySelectorAll('[data-plan]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plan = this.getAttribute('data-plan');
+                    planName.textContent = plan;
+                    selectedPlan.textContent = plan;
+                    modal.classList.add('active');
+                });
+            });
+            
+            // Close modal functionality
+            function closeModalFunc() {
+                modal.classList.remove('active');
+            }
+            
+            if (closeModal) closeModal.addEventListener('click', closeModalFunc);
+            if (cancelBtn) cancelBtn.addEventListener('click', closeModalFunc);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Form submission
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    const email = document.getElementById('email').value;
+                    const purpose = document.getElementById('purpose').value;
+                    
+                    if (!email || !purpose) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+                    
+                    // Here you would normally send the data to your server
+                    alert(`Thank you! Your invite request for ${selectedPlan.textContent} has been received. We'll contact you at ${email} soon.`);
+                    closeModalFunc();
+                });
+            }
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Animate cards on scroll with improved performance
+        const animateOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            animateOnScroll.observe(card);
+        });
+    </script>
+</body>
+</html>
